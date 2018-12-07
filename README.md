@@ -77,8 +77,9 @@ function App() {
         <Router>
             <Home>
                 <Suspense fallback={Loader}>
-                <Route path="/datasets" component={LazyDataset}>
-                <Route path="/preparations" component={LazyPreparations}>
+                    <Route path="/datasets" component={LazyDataset}>
+                    <Route path="/preparations" component={LazyPreparations}>
+                </Suspense>
             </Home>
         </Router>
     );
@@ -148,6 +149,8 @@ The idea is to write
 * saga
 * actions
 * a simplified exposed api that dispatch an action, handled by sagas/reducers
+
+A service is a business part. We can have a DataseService to deal with datasets, or a HomeService to deal with things like side panel state, ...
 
 ?? : Not sure how to pass reducers/saga/actions to the bootstrap for now
 
