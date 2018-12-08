@@ -87,6 +87,35 @@ function App() {
 
 ```
 
+Or if the external module defines a common path mapping
+
+```javascript
+import '@talend/bootstrap-theme/src/theme/theme.scss';
+import React, { Suspense } from 'react';
+import ProptTypes from 'prop-types';
+import { Router, Route } from '@talend/app/route';
+import Loader from '@talend/components/lib/Loader';
+
+import { DatasetRoutes } from '@talend/dataset'; // exposes route components with lazy component
+import Home from './Home'; // Layout + header + side panel
+
+const LazyPreparations = React.lazy(() => import('./Preparations'));
+
+function App() {
+    return (
+        <Router>
+            <Home>
+                <Suspense fallback={Loader}>
+                    <DatasetRoutes />
+                    <Route path="/preparations" component={LazyPreparations}>
+                </Suspense>
+            </Home>
+        </Router>
+    );
+}
+
+```
+
 # Saga
 
 ```javascript
@@ -115,7 +144,21 @@ Drop actions, routes, views parts.
 
 The idea from a crazy guy : https://codesandbox.io/s/j73z71p9n9
 
-# Collections
+# Services
+
+The idea is to write
+* reducers
+* saga
+* actions
+* a simplified exposed api that dispatch an action, handled by sagas/reducers
+
+A service is a business part. We can have a DataseService to deal with datasets, or a HomeService to deal with things like side panel state, ...
+
+?? : Not sure how to pass reducers/saga/actions to the bootstrap for now
+
+There are built in services
+
+## Collections Service
 
 ```javascript
 import React from 'react';
@@ -142,19 +185,11 @@ function mapDispatchToProps(dispatch) {
 }
 ```
 
-# Services
+This example is a dummy example, without backend.
+In practice, collections results from api calls, and it could be really nice to have the fetch status stores in collections entities.
+This can be managed by Http service (continue to read for http service).
 
-The idea is to write
-* reducers
-* saga
-* actions
-* a simplified exposed api that dispatch an action, handled by sagas/reducers
-
-A service is a business part. We can have a DataseService to deal with datasets, or a HomeService to deal with things like side panel state, ...
-
-?? : Not sure how to pass reducers/saga/actions to the bootstrap for now
-
-# Http service
+## Http service
 
 Pure js service that is responsible to fetch.
 It is configured using bootstrap().
@@ -162,6 +197,24 @@ It is configured using bootstrap().
 ```javascript
 import { HttpService, CollectionService } from '@talend/app';
 
+CollectionService.setStatus('preparations', HttpStatus.inProgress);
 await preparations = HttpService.fetch(preparationsUrl);
 CollectionService.set('preparations', preparations);
+CollectionService.setStatus('preparations', HttpStatus.success);
 ```
+
+## Router service
+
+Service that dispatch the actions for connected-react-router.
+Like the router, the implem can be changed easily, without changing the api.
+
+# Drawbacks
+
+## Connected components
+
+Some components can't really be connected at first (in @talend/containers).
+Those have to be connected in each project (if needed).
+
+Let's take an example : the side panel. It will be only a component, with uncontrolled behavior by default, and controlled if it has props.onToggle and props.isExpanded.
+If a project need to control it to open it from the outside, they have to connect it themself, and manage its place in the project store.
+This can be then part of a service (ex: HomeService that manage all common home pages state (panel, header, etc).
