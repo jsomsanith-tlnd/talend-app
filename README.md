@@ -44,10 +44,13 @@ import App from './App.component';
 bootstrap({
     appId: 'app', // DOM id to insert react app
     store: {
-        reducers: [],
         enhancers: [],
-        middlewares: [],
         initialState: {},
+        middlewares: [],
+        preReducers: [],
+        reducers: [],
+        sagas: [],
+        storeCallback: () => {},
     },
     http: {
         // things to configure http service ?
