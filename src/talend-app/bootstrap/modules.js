@@ -74,7 +74,7 @@ const MERGE_FNS = {
 	initialState: mergeObjects,
 	middlewares: mergeArrays,
 	preReducers: mergeArrays,
-	reducers: mergeArrays,
+	reducer: mergeObjects,
 	sagas: mergeArrays,
 	storeCallback: mergeFns,
 };

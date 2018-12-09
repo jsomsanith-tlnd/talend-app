@@ -4,7 +4,7 @@ import { HOME_STORE_ROOT } from './constants';
 
 export const serviceModule = {
 	store: {
-		reducers: [{ [HOME_STORE_ROOT]: reducer }],
+		reducer: { [HOME_STORE_ROOT]: reducer },
 	},
 };
 

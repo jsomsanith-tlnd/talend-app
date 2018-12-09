@@ -6,19 +6,19 @@ import mergeModules from './modules';
 import App from '../App';
 
 function bootstrapRedux(options) {
+	const { enhancers = [], initialState, middlewares = [], reducer = {} } = options.store;
 	return createStore(
-		combineReducers(options.reducers || {}),
-		options.initialState,
+		combineReducers(reducer),
+		initialState,
 		compose(
-			applyMiddleware(...(options.middlewares || [])),
-			...(options.enhancers || []),
+			applyMiddleware(...middlewares),
+			...enhancers,
 		),
 	);
 }
 
 export default function bootstrap(configuration) {
 	const options = mergeModules(configuration);
-	console.log(options);
 	const store = bootstrapRedux(options);
 	render(
 		<App store={store} loading={options.AppLoader} RootComponent={configuration.rootComponent} />,
