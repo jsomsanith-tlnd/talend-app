@@ -28,10 +28,10 @@ const actions = [
 	},
 ];
 
-function HomeSidePanel(props) {
+function Menu(props) {
 	return <SidePanel actions={actions} docked={props.docked} onToggleDock={props.onToggleDock} />;
 }
-HomeSidePanel.propTypes = {
+Menu.propTypes = {
 	docked: PropTypes.bool,
 	onToggleDock: PropTypes.func.isRequired,
 };
@@ -47,4 +47,4 @@ const mapDispatchToProps = {
 export default connect(
 	mapStateToProps,
 	mapDispatchToProps,
-)(HomeSidePanel);
+)(Menu);

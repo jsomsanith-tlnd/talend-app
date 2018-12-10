@@ -1,18 +1,26 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import HeaderBar from '@talend/react-components/lib/HeaderBar';
-import IconsProvider from '@talend/react-components/lib/IconsProvider';
 import Layout from '@talend/react-components/lib/Layout';
-import HomeSidePanel from './HomeSidePanel.component';
+import Loader from '@talend/react-components/lib/Loader';
+import Menu from './Menu.component';
+
+const LazyDatasetsList = React.lazy(() =>
+	import(/* webpackChunkName: "datasets-list" */ '../DatasetsList'),
+);
+const LazyPreparationsList = React.lazy(() =>
+	import(/* webpackChunkName: "preparations-list" */ '../PreparationsList'),
+);
 
 export default function Home() {
 	return (
 		<Layout
 			header={<HeaderBar brand={{ label: 'Talend App Framework' }} />}
 			mode="TwoColumns"
-			one={<HomeSidePanel />}
+			one={<Menu />}
 		>
-			<IconsProvider />
-			Coucou
+			<Suspense fallback={<Loader />}>
+				<LazyDatasetsList />
+			</Suspense>
 		</Layout>
 	);
 }
