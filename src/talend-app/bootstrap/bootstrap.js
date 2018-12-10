@@ -1,6 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { applyMiddleware, combineReducers, createStore, compose } from 'redux';
+import thunk from 'redux-thunk';
 
 import mergeModules from './modules';
 import App from '../App';
@@ -11,7 +12,7 @@ function bootstrapRedux(options) {
 		combineReducers(reducer),
 		initialState,
 		compose(
-			applyMiddleware(...middlewares),
+			applyMiddleware(thunk, ...middlewares),
 			...enhancers,
 		),
 	);

@@ -1,8 +1,14 @@
+/* eslint-disable no-console */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import SidePanel from '@talend/react-components/lib/SidePanel';
-import HomeService from '../services/home';
+
+// v1
+// import HomeService from '../services/home';
+
+// v2
+import HomeService from '../services/home-v2';
 
 const actions = [
 	{
@@ -31,11 +37,11 @@ HomeSidePanel.propTypes = {
 };
 
 function mapStateToProps(state) {
-	return { docked: HomeService.getSidePanelDocked(state) };
+	return { docked: HomeService.getMenuDocked(state) };
 }
 
 const mapDispatchToProps = {
-	onToggleDock: HomeService.toggleSidePanel,
+	onToggleDock: HomeService.toggleMenu,
 };
 
 export default connect(

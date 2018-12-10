@@ -1,17 +1,17 @@
-import { HOME_SIDE_PANEL_TOGGLE, HOME_STORE_ROOT } from './constants';
+import { HOME_MENU_TOGGLE, HOME_STORE_ROOT } from './constants';
 
-function getSidePanelDocked(state) {
-	return state[HOME_STORE_ROOT].sidePanelDocked;
+function getMenuDocked(state) {
+	return state[HOME_STORE_ROOT].menuDocked;
 }
 
-function toggleSidePanel(event) {
+function toggleMenu(event) {
 	return {
-		type: HOME_SIDE_PANEL_TOGGLE,
+		type: HOME_MENU_TOGGLE,
 		event,
 	};
 }
 
 export default {
-	getSidePanelDocked,
-	toggleSidePanel,
+	getMenuDocked,
+	toggleMenu,
 };
