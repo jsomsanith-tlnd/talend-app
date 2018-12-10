@@ -148,17 +148,70 @@ The idea from a crazy guy : https://codesandbox.io/s/j73z71p9n9
 
 # Services
 
-The idea is to write
+A service a business module. We can have a DataseService to deal with datasets, or a HomeService to deal with things like side panel state, ...
+There are 2 types of services :
+* pure js service
+* redux module service
+
+A pure js service expose an api to compute business entities.
+
+While a redux module contains
 * reducers
 * saga
 * actions
 * a simplified exposed api that dispatch an action, handled by sagas/reducers
 
-A service is a business part. We can have a DataseService to deal with datasets, or a HomeService to deal with things like side panel state, ...
+A redux module has to register like any module.
 
-?? : Not sure how to pass reducers/saga/actions to the bootstrap for now
+```javascript
+// @talend/app-store-utils
 
-There are built in services
+// module
+export default {
+	store: {
+		reducer: {
+			[REDUX_STORE_ROOT]: reducer,
+		},
+	},
+};
+
+// service api
+export { getFromStore, setInStore };
+
+
+```
+
+Register the module
+```javascript
+import storeUtilsModule from '@talend/app-store-utils';
+
+bootstrap({
+    ...
+    modules: [storeUtilsModule],
+);
+
+```
+
+Use the service api. In this example it's in another service.
+```javascript
+import { MENU_DOCKED_PATH } from './constants';
+import { getFromStore, setInStore } from '@talend/app-store-utils';
+
+function getMenuDocked(state) {
+	return getFromStore(state, MENU_DOCKED_PATH);
+}
+
+function toggleMenu() {
+	return (dispatch, getState) => setInStore(dispatch, MENU_DOCKED_PATH, !getMenuDocked(getState()));
+}
+
+export default {
+	getMenuDocked,
+	toggleMenu,
+};
+```
+
+There are built in services.
 
 ## Collections Service
 
