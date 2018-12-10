@@ -47,8 +47,7 @@ bootstrap({
         enhancers: [],
         initialState: {},
         middlewares: [],
-        preReducers: [],
-        reducers: [],
+        reducers: {},
         sagas: [],
         storeCallback: () => {},
     },
@@ -189,7 +188,7 @@ function mapDispatchToProps(dispatch) {
 ```
 
 This example is a dummy example, without backend.
-In practice, collections results from api calls, and it could be really nice to have the fetch status stores in collections entities.
+In practice, collections results from api calls, and it could be really nice to have the fetch status and errors stores in collections entities.
 This can be managed by Http service (continue to read for http service).
 
 ## Http service
@@ -221,3 +220,15 @@ Those have to be connected in each project (if needed).
 Let's take an example : the side panel. It will be only a component, with uncontrolled behavior by default, and controlled if it has props.onToggle and props.isExpanded.
 If a project need to control it to open it from the outside, they have to connect it themself, and manage its place in the project store.
 This can be then part of a service (ex: HomeService that manage all common home pages state (panel, header, etc).
+
+# Feedback
+
+* router
+Router abstraction can remove some features. Perhaps no abstraction, choose 1 lib, 1 version and keep it.
+Router should not be mandatory
+
+* services
+Look at https://github.com/cerebral/cerebral for ideas to simplify services and immer for immutability
+
+* collections
+More a data (collections, objects, ...)
