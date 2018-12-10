@@ -1,5 +1,6 @@
-import { MENU_DOCKED_PATH } from './constants';
 import { getFromStore, setInStore } from '../../../talend-app-store-utils';
+
+const MENU_DOCKED_PATH = ['home', 'menu', 'docked'];
 
 function getMenuDocked(state) {
 	return getFromStore(state, MENU_DOCKED_PATH);

@@ -1,6 +1,4 @@
-import HomeService from './home.service';
-import reducer from './reducer';
-import { HOME_STORE_ROOT } from './constants';
+import { HOME_STORE_ROOT, reducer, getMenuDocked, toggleMenu } from './home.service';
 
 export const serviceModule = {
 	store: {
@@ -8,4 +6,7 @@ export const serviceModule = {
 	},
 };
 
-export default HomeService;
+export default {
+	getMenuDocked,
+	toggleMenu,
+};
