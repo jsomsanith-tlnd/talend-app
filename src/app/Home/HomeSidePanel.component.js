@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import SidePanel from '@talend/react-components/lib/SidePanel';
 import HomeService from '../services/home';
@@ -23,25 +22,23 @@ const actions = [
 	},
 ];
 
-class HomeSidePanel extends React.Component {
-	constructor(props) {
-		super(props);
-		this.onToggleDock = bindActionCreators(HomeService.toggleSidePanel, props.dispatch);
-	}
-
-	render() {
-		return (
-			<SidePanel actions={actions} docked={this.props.docked} onToggleDock={this.onToggleDock} />
-		);
-	}
+function HomeSidePanel(props) {
+	return <SidePanel actions={actions} docked={props.docked} onToggleDock={props.onToggleDock} />;
 }
 HomeSidePanel.propTypes = {
 	docked: PropTypes.bool,
-	dispatch: PropTypes.func.isRequired,
+	onToggleDock: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {
 	return { docked: HomeService.getSidePanelDocked(state) };
 }
 
-export default connect(mapStateToProps)(HomeSidePanel);
+const mapDispatchToProps = {
+	onToggleDock: HomeService.toggleSidePanel,
+};
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps,
+)(HomeSidePanel);
