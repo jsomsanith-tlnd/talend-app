@@ -3,7 +3,6 @@
 * Components : uncontrolled mode by default
 * Components : controlled if some props are provided
 * Containers : add somelogic on top of controlled components
-* Connect : redux connect containers. Perhaps, add services ? (continue to read to know more about services).
 
 # Summary
 
@@ -151,11 +150,15 @@ The idea from a crazy guy : https://codesandbox.io/s/j73z71p9n9
 A service a business module. We can have a DataseService to deal with datasets, or a HomeService to deal with things like side panel state, ...
 There are 2 types of services :
 * pure js service
-* redux module service
+* redux module
+
+## Pure js service
 
 A pure js service expose an api to compute business entities.
 
-While a redux module contains
+## Redux module
+
+A redux module contains
 * reducers
 * saga
 * actions
@@ -164,39 +167,36 @@ While a redux module contains
 A redux module has to register like any module.
 
 ```javascript
-// @talend/app-store-utils
+import { HOME_STORE_ROOT, reducer, getMenuDocked, toggleMenu } from './home.service';
 
-// module
-export default {
+export const serviceModule = {
 	store: {
-		reducer: {
-			[REDUX_STORE_ROOT]: reducer,
-		},
+		reducer: { [HOME_STORE_ROOT]: reducer },
 	},
 };
 
-// service api
-export {
-    selectors: { getFromStore },
-    actions: { setInStore },
+export default {
+	selectors: { getMenuDocked },
+	actions: { toggleMenu },
 };
-
 
 ```
 
 Register the module
 ```javascript
-import storeUtilsModule from '@talend/app-store-utils';
+import { serviceModule as homeServiceModule } from './services/home';
 
 bootstrap({
     ...
-    modules: [storeUtilsModule],
+    modules: [homeServiceModule],
 );
 
 ```
 
 Use the service api. In this example it's in a connect.
 ```javascript
+import HomeService from '../services/home';
+
 function mapStateToProps(state) {
 	return { docked: HomeService.selectors.getMenuDocked(state) };
 }
@@ -211,12 +211,12 @@ export default connect(
 )(Menu);
 ```
 
-There are built in services.
-
-## Simplify the right of redux module
+## Simplify redux module
 
 A first attempt to simplify redux api has been done in @talend/app-store-utils but it was abandoned because the code is not explicit enough.
 No need to develop something else, if the devs want to use some helpers, a lot of them exist, like https://github.com/adrienjt/redux-data-structures.
+
+# Built-in services
 
 ## Collections Service
 
@@ -289,7 +289,7 @@ Router should not be mandatory
 Look at https://github.com/cerebral/cerebral for ideas to simplify services and immer for immutability
 
 * collections
-More a data (collections, objects, ...)
+More a data (collections, objects, ...) instead of collection that implies an array of things
 
 # Migration path from CMF
 
