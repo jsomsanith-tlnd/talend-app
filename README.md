@@ -176,7 +176,10 @@ export default {
 };
 
 // service api
-export { getFromStore, setInStore };
+export {
+    selectors: { getFromStore },
+    actions: { setInStore },
+};
 
 
 ```
@@ -192,26 +195,28 @@ bootstrap({
 
 ```
 
-Use the service api. In this example it's in another service.
+Use the service api. In this example it's in a connect.
 ```javascript
-import { MENU_DOCKED_PATH } from './constants';
-import { getFromStore, setInStore } from '@talend/app-store-utils';
-
-function getMenuDocked(state) {
-	return getFromStore(state, MENU_DOCKED_PATH);
+function mapStateToProps(state) {
+	return { docked: HomeService.selectors.getMenuDocked(state) };
 }
 
-function toggleMenu() {
-	return (dispatch, getState) => setInStore(dispatch, MENU_DOCKED_PATH, !getMenuDocked(getState()));
-}
-
-export default {
-	getMenuDocked,
-	toggleMenu,
+const mapDispatchToProps = {
+	onToggleDock: HomeService.actions.toggleMenu,
 };
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps,
+)(Menu);
 ```
 
 There are built in services.
+
+## Simplify the right of redux module
+
+A first attempt to simplify redux api has been done in @talend/app-store-utils but it was abandoned because the code is not explicit enough.
+No need to develop something else, if the devs want to use some helpers, a lot of them exist, like https://github.com/adrienjt/redux-data-structures.
 
 ## Collections Service
 
@@ -285,3 +290,13 @@ Look at https://github.com/cerebral/cerebral for ideas to simplify services and 
 
 * collections
 More a data (collections, objects, ...)
+
+# Migration path from CMF
+
+1. Get out of settings hell
+2. Use a real router instead of route settings
+
+## Get out of settings hell
+
+## Remove route settings
+

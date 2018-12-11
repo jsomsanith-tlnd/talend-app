@@ -15,7 +15,8 @@ bootstrap({
 });
 */
 
-// v2
+// v2 - with @talend/app-store-utils
+// Abandoned because the code is not explicit enough
 bootstrap({
 	appId: 'app',
 	appLoader: AppLoader,

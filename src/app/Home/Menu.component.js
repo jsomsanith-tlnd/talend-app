@@ -4,11 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import SidePanel from '@talend/react-components/lib/SidePanel';
 
-// v1
-// import HomeService from '../services/home';
-
-// v2
-import HomeService from '../services/home-v2';
+import HomeService from '../services/home';
 
 const actions = [
 	{
@@ -37,11 +33,11 @@ Menu.propTypes = {
 };
 
 function mapStateToProps(state) {
-	return { docked: HomeService.getMenuDocked(state) };
+	return { docked: HomeService.selectors.getMenuDocked(state) };
 }
 
 const mapDispatchToProps = {
-	onToggleDock: HomeService.toggleMenu,
+	onToggleDock: HomeService.actions.toggleMenu,
 };
 
 export default connect(

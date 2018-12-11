@@ -7,6 +7,6 @@ export const serviceModule = {
 };
 
 export default {
-	getMenuDocked,
-	toggleMenu,
+	selectors: { getMenuDocked },
+	actions: { toggleMenu },
 };
