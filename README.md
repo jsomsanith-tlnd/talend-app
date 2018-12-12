@@ -290,6 +290,7 @@ Look at https://github.com/cerebral/cerebral for ideas to simplify services and 
 
 * collections
 More a data (collections, objects, ...) instead of collection that implies an array of things
+See https://github.com/mikechabot/redux-entity
 
 # Migration path from CMF
 
