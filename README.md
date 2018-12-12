@@ -279,7 +279,7 @@ Let's take an example : the side panel. It will be only a component, with uncont
 If a project need to control it to open it from the outside, they have to connect it themself, and manage its place in the project store.
 This can be then part of a service (ex: HomeService that manage all common home pages state (panel, header, etc).
 
-# Feedback
+# Feedbacks to explore
 
 * router
 Router abstraction can remove some features. Perhaps no abstraction, choose 1 lib, 1 version and keep it.
@@ -298,6 +298,7 @@ See https://github.com/mikechabot/redux-entity
 2. Use a real router instead of route settings
 
 ## Get out of settings hell
+TODO
 
 ## Remove route settings
-
+TODO
