@@ -1,0 +1,68 @@
+[
+  {
+    "id": 0,
+    "name": "Dataset 0",
+    "author": "Jimmy",
+    "creationDate": "25/12/2018"
+  },
+  {
+    "id": 1,
+    "name": "Dataset 1",
+    "author": "Jimmy",
+    "creationDate": "25/12/2018"
+  },
+  {
+    "id": 2,
+    "name": "Dataset 2",
+    "author": "Jimmy",
+    "creationDate": "25/12/2018"
+  },
+  {
+    "id": 3,
+    "name": "Dataset 3",
+    "author": "Jimmy",
+    "creationDate": "25/12/2018"
+  },
+  {
+    "id": 4,
+    "name": "Dataset 4",
+    "author": "Jimmy",
+    "creationDate": "25/12/2018"
+  },
+  {
+    "id": 5,
+    "name": "Dataset 5",
+    "author": "Jimmy",
+    "creationDate": "25/12/2018"
+  },
+  {
+    "id": 6,
+    "name": "Dataset 6",
+    "author": "Jimmy",
+    "creationDate": "25/12/2018"
+  },
+  {
+    "id": 7,
+    "name": "Dataset 7",
+    "author": "Jimmy",
+    "creationDate": "25/12/2018"
+  },
+  {
+    "id": 8,
+    "name": "Dataset 8",
+    "author": "Jimmy",
+    "creationDate": "25/12/2018"
+  },
+  {
+    "id": 9,
+    "name": "Dataset 9",
+    "author": "Jimmy",
+    "creationDate": "25/12/2018"
+  },
+  {
+    "id": 10,
+    "name": "Dataset 10",
+    "author": "Jimmy",
+    "creationDate": "25/12/2018"
+  }
+]
