@@ -2,7 +2,8 @@ import reducer from './reducer';
 import { getFromStore, setInStore } from './service';
 import { REDUX_STORE_ROOT } from './constants';
 
-export default {
+// @talend/app module
+export const storeUtilsModule = {
 	store: {
 		reducer: {
 			[REDUX_STORE_ROOT]: reducer,
@@ -10,4 +11,8 @@ export default {
 	},
 };
 
-export { getFromStore, setInStore };
+// Service
+export default {
+	actions: { setInStore },
+	selectors: { getFromStore },
+};

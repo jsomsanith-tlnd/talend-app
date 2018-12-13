@@ -1,20 +1,11 @@
 import React from 'react';
 import PropType from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchCollection, getCollection } from '../../talend-app-collections';
+import CollectionsService from '../../talend-app-collections';
 
 class DatasetsList extends React.Component {
-	// TODO in a saga
 	componentDidMount() {
-		fetchCollection(
-			'datasets',
-			fetch('/datasets.json').then(resp => {
-				if (resp.ok) {
-					return resp.json();
-				}
-				throw new Error(`${resp.status} - ${resp.statusText}`);
-			}),
-		)(this.props.dispatch);
+		this.props.dispatch(CollectionsService.actions.fetchCollection('datasets', '/datasets.json'));
 	}
 
 	render() {
@@ -41,13 +32,14 @@ DatasetsList.propTypes = {
 		data: PropType.array,
 		error: PropType.object,
 	}),
+	dispatch: PropType.func.isRequired,
 };
 DatasetsList.defaultProps = {
 	datasets: {},
 };
 
 function mapStateToProps(state) {
-	return { datasets: getCollection(state, 'datasets') };
+	return { datasets: CollectionsService.selectors.getCollection(state, 'datasets') };
 }
 
 export default connect(mapStateToProps)(DatasetsList);

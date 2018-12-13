@@ -1,16 +1,12 @@
-import { getFromStore, setInStore } from '../../../talend-app-store-utils';
+import StoreUtilsService from '../../../talend-app-store-utils';
 
 const MENU_DOCKED_PATH = ['home', 'menu', 'docked'];
 
-function getMenuDocked(state) {
-	return getFromStore(state, MENU_DOCKED_PATH);
+export function getMenuDocked(state) {
+	return StoreUtilsService.selectors.getFromStore(state, MENU_DOCKED_PATH);
 }
 
-function toggleMenu() {
-	return (dispatch, getState) => setInStore(dispatch, MENU_DOCKED_PATH, !getMenuDocked(getState()));
+export function toggleMenu() {
+	return (dispatch, getState) =>
+		StoreUtilsService.actions.setInStore(dispatch, MENU_DOCKED_PATH, !getMenuDocked(getState()));
 }
-
-export default {
-	getMenuDocked,
-	toggleMenu,
-};
