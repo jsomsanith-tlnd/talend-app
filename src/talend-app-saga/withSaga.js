@@ -10,10 +10,10 @@ export default function withSaga(WrappedComponent, saga) {
 		constructor(props) {
 			super(props);
 			this.id = uuid.v4();
-		}
 
-		componentDidMount() {
-			this.props.dispatch({
+			// this is done at constructor to be performed before children mount.
+			// so children can perform dispatch that saga will handle
+			props.dispatch({
 				type: SAGA_START,
 				id: this.id,
 				saga,

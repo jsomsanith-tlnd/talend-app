@@ -3,17 +3,23 @@ import { SAGA_START, SAGA_STOP } from './constants';
 
 const startedSagas = {};
 
-export function* sagaStarter() {
+function* sagaStarter() {
 	while (true) {
 		const { id, saga } = yield take(SAGA_START);
 		startedSagas[id] = yield spawn(saga);
 	}
 }
 
-export function* sagaStopper() {
+function* sagaStopper() {
 	while (true) {
 		const { id } = yield take(SAGA_STOP);
 		cancel(startedSagas[id]);
 		delete startedSagas[id];
 	}
+}
+
+// main saga that will start all sagas from options
+export default function* rootSaga() {
+	yield spawn(sagaStarter);
+	yield spawn(sagaStopper);
 }
