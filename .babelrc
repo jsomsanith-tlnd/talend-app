@@ -1,4 +1,4 @@
 {
-  "extends": "./node_modules/@talend/scripts/preset/config/.babelrc.json",
+  "extends": "@talend/scripts/webapp/preset/config/.babelrc.json",
   "plugins": ["syntax-dynamic-import"]
 }
