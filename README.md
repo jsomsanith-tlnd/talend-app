@@ -288,9 +288,8 @@ Router should not be mandatory
 * services
 Look at https://github.com/cerebral/cerebral for ideas to simplify services and immer for immutability
 
-* collections
-More a data (collections, objects, ...) instead of collection that implies an array of things
-See https://github.com/mikechabot/redux-entity
+* http
+Improve README to describe more the features it contains around http calls
 
 # Migration path from CMF
 
