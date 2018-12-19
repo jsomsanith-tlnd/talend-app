@@ -33,33 +33,123 @@
 | <span style="color: red">Registries/Inject</span> | Drop.<br/>Until we have the need to override a component, we don't implement registries. If we need, component registries (EE) with inject feature via context. |
 | <span style="color: red">Action api</span> | Drop.<br/>Write js. |
 
-# Bootstrap
+# @talend/app
+
+This replace the heavy react-cmf module by the minimum bootstrap code.
+
+`@talend/app` is a lightweight module that manage 2 things
+* the bootstrap of the app with state management using redux
+* modules (external addons, or internal business modules)
+
+[Go to documentation](./src/talend-app/README.md)
+
+# @talend/app-saga
+
+This replace redux-saga management with sagaRouter.
+It avoids route configuration duplication.
+
+`@talend/app-saga` is a `@talend/app` addon that
+* add redux-saga middleware
+* expose a HOC that start/stop a saga based on the component mount/unmout
+
+[Go to documentation](./src/talend-app-saga/README.md)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Settings
+
+Drop actions, routes, views parts.
+
+The idea from a crazy guy : https://codesandbox.io/s/j73z71p9n9
+
+# Services
+
+A service a business module. We can have a DataseService to deal with datasets, or a HomeService to deal with things like side panel state, ...
+There are 2 types of services :
+* pure js service
+* redux module
+
+## Pure js service
+
+A pure js service expose an api to compute business entities.
+
+## Simplify redux module
+
+A first attempt to simplify redux api has been done in @talend/app-store-utils but it was abandoned because the code is not explicit enough.
+No need to develop something else, if the devs want to use some helpers, a lot of them exist, like https://github.com/adrienjt/redux-data-structures.
+
+# Built-in services
+
+## Collections Service
 
 ```javascript
-import { bootstrap } from '@talend/app';
-import { datasetModule } from '@talend/dataset';
-import App from './App.component';
+import React from 'react';
+import ProptTypes from 'prop-types';
+import { CollectionService } from '@talend/app';
 
-bootstrap({
-    appId: 'app', // DOM id to insert react app
-    store: {
-        enhancers: [],
-        initialState: {},
-        middlewares: [],
-        reducers: {},
-        sagas: [],
-        storeCallback: () => {},
-    },
-    http: {
-        // things to configure http service ?
-    },
-    settingsUrl: '', // the result will populate Settings context value
-    rootComponent: App,
-    modules: [datasetModule]
-});
+import saga from './saga'; // preparations main saga
+
+// can be redux connected
+function Preparations({ preps, removePrep }) {
+    return <div/>;
+}
+
+function mapStateToProps(state) {
+    return {
+        preps: CollectionService.select('preparations');
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        removePrep: prep => CollectionService.remove(dispatch, 'preparation', prep),
+    };
+}
+```
+
+This example is a dummy example, without backend.
+In practice, collections results from api calls, and it could be really nice to have the fetch status and errors stores in collections entities.
+This can be managed by Http service (continue to read for http service).
+
+## Http service
+
+Pure js service that is responsible to fetch.
+It is configured using bootstrap().
+
+```javascript
+import { HttpService, CollectionService } from '@talend/app';
+
+CollectionService.setStatus('preparations', HttpStatus.inProgress);
+await preparations = HttpService.fetch(preparationsUrl);
+CollectionService.set('preparations', preparations);
+CollectionService.setStatus('preparations', HttpStatus.success);
 ```
 
 # Router
+
+## Warning
+
+Still need to think about this one.
+The first idea was to have
+* an abstraction on top on react-router.
+* a service on top on connected-react-router
+
+But we may not need that.
+
+# Router component
 
 ```javascript
 import '@talend/bootstrap-theme/src/theme/theme.scss';
@@ -117,152 +207,6 @@ function App() {
 
 ```
 
-# Saga
-
-```javascript
-import React from 'react';
-import ProptTypes from 'prop-types';
-import { withSaga } from '@talend/app';
-
-import saga from './saga'; // preparations main saga
-
-// can be redux connected
-function Preparations() {
-    return <div/>;
-}
-
-// start/stop saga with mount/unmount
-// so every app can attach sagas on the component they want to match a component lifecycle.
-// permanent sagas are attached to root component.
-// no need any sagaRouter with route duplication.
-export default withSaga(saga)(Preparations);
-
-```
-
-# Settings
-
-Drop actions, routes, views parts.
-
-The idea from a crazy guy : https://codesandbox.io/s/j73z71p9n9
-
-# Services
-
-A service a business module. We can have a DataseService to deal with datasets, or a HomeService to deal with things like side panel state, ...
-There are 2 types of services :
-* pure js service
-* redux module
-
-## Pure js service
-
-A pure js service expose an api to compute business entities.
-
-## Redux module
-
-A redux module contains
-* reducers
-* saga
-* actions
-* a simplified exposed api that dispatch an action, handled by sagas/reducers
-
-A redux module has to register like any module.
-
-```javascript
-import { HOME_STORE_ROOT, reducer, getMenuDocked, toggleMenu } from './home.service';
-
-export const serviceModule = {
-	store: {
-		reducer: { [HOME_STORE_ROOT]: reducer },
-	},
-};
-
-export default {
-	selectors: { getMenuDocked },
-	actions: { toggleMenu },
-};
-
-```
-
-Register the module
-```javascript
-import { serviceModule as homeServiceModule } from './services/home';
-
-bootstrap({
-    ...
-    modules: [homeServiceModule],
-);
-
-```
-
-Use the service api. In this example it's in a connect.
-```javascript
-import HomeService from '../services/home';
-
-function mapStateToProps(state) {
-	return { docked: HomeService.selectors.getMenuDocked(state) };
-}
-
-const mapDispatchToProps = {
-	onToggleDock: HomeService.actions.toggleMenu,
-};
-
-export default connect(
-	mapStateToProps,
-	mapDispatchToProps,
-)(Menu);
-```
-
-## Simplify redux module
-
-A first attempt to simplify redux api has been done in @talend/app-store-utils but it was abandoned because the code is not explicit enough.
-No need to develop something else, if the devs want to use some helpers, a lot of them exist, like https://github.com/adrienjt/redux-data-structures.
-
-# Built-in services
-
-## Collections Service
-
-```javascript
-import React from 'react';
-import ProptTypes from 'prop-types';
-import { CollectionService } from '@talend/app';
-
-import saga from './saga'; // preparations main saga
-
-// can be redux connected
-function Preparations({ preps, removePrep }) {
-    return <div/>;
-}
-
-function mapStateToProps(state) {
-    return {
-        preps: CollectionService.select('preparations');
-    };
-}
-
-function mapDispatchToProps(dispatch) {
-    return {
-        removePrep: prep => CollectionService.remove(dispatch, 'preparation', prep),
-    };
-}
-```
-
-This example is a dummy example, without backend.
-In practice, collections results from api calls, and it could be really nice to have the fetch status and errors stores in collections entities.
-This can be managed by Http service (continue to read for http service).
-
-## Http service
-
-Pure js service that is responsible to fetch.
-It is configured using bootstrap().
-
-```javascript
-import { HttpService, CollectionService } from '@talend/app';
-
-CollectionService.setStatus('preparations', HttpStatus.inProgress);
-await preparations = HttpService.fetch(preparationsUrl);
-CollectionService.set('preparations', preparations);
-CollectionService.setStatus('preparations', HttpStatus.success);
-```
-
 ## Router service
 
 Service that dispatch the actions for connected-react-router.
@@ -272,7 +216,7 @@ Like the router, the implem can be changed easily, without changing the api.
 
 ## Connected components
 
-Some components can't really be connected at first (in @talend/containers).
+Components can't really be connected at first (in @talend/containers).
 Those have to be connected in each project (if needed).
 
 Let's take an example : the side panel. It will be only a component, with uncontrolled behavior by default, and controlled if it has props.onToggle and props.isExpanded.
@@ -285,8 +229,8 @@ This can be then part of a service (ex: HomeService that manage all common home 
 Router abstraction can remove some features. Perhaps no abstraction, choose 1 lib, 1 version and keep it.
 Router should not be mandatory
 
-* services
-Look at https://github.com/cerebral/cerebral for ideas to simplify services and immer for immutability
+* store
+Look at immer for immutability
 
 * http
 Improve README to describe more the features it contains around http calls
