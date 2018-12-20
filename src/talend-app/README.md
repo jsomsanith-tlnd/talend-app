@@ -80,7 +80,7 @@ In this example, myAddonModule is merged with the configuration passed to `boots
 
 Modules can be internal modules that are parts of your applications (see next Architecture section), or external modules.
 You can find some interesting external modules :
-* [Collections](../talend-app-collections/README.md) : helps to manage collections with the fetch status and errors.
+* [Entities](../talend-app-entities/README.md) : helps to manage entities with the fetch status and errors.
 * [Saga](../talend-app-saga/README.md) : add redux-saga with a HOC to start/stop the saga depending on components mount/unmount.
 * [Http](../talend-app-http/README.md) : helps to manage http request, with the possibility to configure 1 global configuration, or 1 configuration per request.
 * [Store utils](../talend-app-store-utils/README.md) : a way to avoid writing reducers for very simple cases.
@@ -128,7 +128,7 @@ export default connect(
 
 ### Modules
 
-The module exposed
+The module exposes
 * a named exported module configuration
 * a default exported service
 

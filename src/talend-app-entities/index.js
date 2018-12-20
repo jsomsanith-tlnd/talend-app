@@ -1,21 +1,21 @@
 import { entities } from 'redux-entity';
-import { COLLECTIONS_STORE_ROOT, fetchCollection, getCollection } from './collections';
+import { ENTITIES_STORE_ROOT, fetchEntity, getEntity } from './entities';
 
 // @talend/app module
 /* TODO this module depends on thunk and @talend/app-http
  it should add them in dependencies and module definition
  @talend/app bootstrap should remove duplicates during module merge
  */
-export const collectionsModule = {
+export const entitiesModule = {
 	store: {
 		reducer: {
-			[COLLECTIONS_STORE_ROOT]: entities,
+			[ENTITIES_STORE_ROOT]: entities,
 		},
 	},
 };
 
 // Service
 export default {
-	actions: { fetchCollection },
-	selectors: { getCollection },
+	actions: { fetchEntity },
+	selectors: { getEntity },
 };

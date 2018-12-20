@@ -45,7 +45,7 @@ This replace the heavy react-cmf module by the minimum bootstrap code.
 
 # @talend/app-saga
 
-This replace redux-saga management with sagaRouter.
+This replaces redux-saga management with sagaRouter.
 It avoids route configuration duplication.
 
 `@talend/app-saga` is a `@talend/app` addon that
@@ -53,6 +53,25 @@ It avoids route configuration duplication.
 * expose a HOC that start/stop a saga based on the component mount/unmout
 
 [Go to documentation](./src/talend-app-saga/README.md)
+
+# @talend/app-entities
+
+This addon simplifies the management of entities.
+* manage fetch status and errors
+* store entities in redux store
+
+[Go to documentation](./src/talend-app-entities/README.md)
+
+# @talend/app-http
+
+# @talend/app-store-utils
+WIP
+
+# @talend/app-inject
+
+# @talend/app-router
+Do we keep that ?
+
 
 
 
@@ -77,52 +96,12 @@ The idea from a crazy guy : https://codesandbox.io/s/j73z71p9n9
 
 # Services
 
-A service a business module. We can have a DataseService to deal with datasets, or a HomeService to deal with things like side panel state, ...
-There are 2 types of services :
-* pure js service
-* redux module
-
-## Pure js service
-
-A pure js service expose an api to compute business entities.
-
 ## Simplify redux module
 
 A first attempt to simplify redux api has been done in @talend/app-store-utils but it was abandoned because the code is not explicit enough.
 No need to develop something else, if the devs want to use some helpers, a lot of them exist, like https://github.com/adrienjt/redux-data-structures.
 
 # Built-in services
-
-## Collections Service
-
-```javascript
-import React from 'react';
-import ProptTypes from 'prop-types';
-import { CollectionService } from '@talend/app';
-
-import saga from './saga'; // preparations main saga
-
-// can be redux connected
-function Preparations({ preps, removePrep }) {
-    return <div/>;
-}
-
-function mapStateToProps(state) {
-    return {
-        preps: CollectionService.select('preparations');
-    };
-}
-
-function mapDispatchToProps(dispatch) {
-    return {
-        removePrep: prep => CollectionService.remove(dispatch, 'preparation', prep),
-    };
-}
-```
-
-This example is a dummy example, without backend.
-In practice, collections results from api calls, and it could be really nice to have the fetch status and errors stores in collections entities.
-This can be managed by Http service (continue to read for http service).
 
 ## Http service
 
@@ -242,6 +221,13 @@ Improve README to describe more the features it contains around http calls
 
 ## Get out of settings hell
 TODO
+* views --> create component
+* actions --> add action in service
+* sagas --> withSaga HOC (need to register the stop/start saga)
+
+At the end, we only have route settings and components for each route in registry.
 
 ## Remove route settings
 TODO
+* PR to extract router in progress
+*
