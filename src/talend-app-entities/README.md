@@ -58,9 +58,9 @@ This method returns an entity with the following shape
 }
 ```
 
-| Property | Description |
+| Property | Type | Description |
 |---|---|---|
-| data | `any | The entity value. |
+| data | `any` | The entity value. |
 | isFetching | `boolean` | The id, to which the entity is attached in the store. |
 | error | `object` | Error returned by the fetch. |
 
@@ -87,7 +87,7 @@ export default connect(mapStateToProps)(DatasetsList);
 
 ### Fetch
 
-Perform a fetch request and store it in the store, managing the request status.
+Perform a fetch request and put it in redux store, managing the request status.
 
 **Method**
 ```javascript
