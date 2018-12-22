@@ -64,8 +64,13 @@ This addon simplifies the management of entities.
 
 # @talend/app-http
 
+This module helps the http configuration
+* global configuration
+* specific configuration per request
+
+[Go to documentation](./src/talend-app-http/README.md)
+
 # @talend/app-store-utils
-WIP
 
 # @talend/app-inject
 
@@ -102,20 +107,6 @@ A first attempt to simplify redux api has been done in @talend/app-store-utils b
 No need to develop something else, if the devs want to use some helpers, a lot of them exist, like https://github.com/adrienjt/redux-data-structures.
 
 # Built-in services
-
-## Http service
-
-Pure js service that is responsible to fetch.
-It is configured using bootstrap().
-
-```javascript
-import { HttpService, CollectionService } from '@talend/app';
-
-CollectionService.setStatus('preparations', HttpStatus.inProgress);
-await preparations = HttpService.fetch(preparationsUrl);
-CollectionService.set('preparations', preparations);
-CollectionService.setStatus('preparations', HttpStatus.success);
-```
 
 # Router
 

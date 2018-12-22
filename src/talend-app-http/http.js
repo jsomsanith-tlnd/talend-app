@@ -8,7 +8,7 @@
 function get(url) {
 	return fetch(url).then(resp => {
 		if (resp.ok) {
-			return resp.json();
+			return resp.json(); // TODO only if content type contains 'json'
 		}
 		throw new Error(`${resp.status} - ${resp.statusText}`);
 	});
