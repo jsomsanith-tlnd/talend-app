@@ -142,6 +142,7 @@ The module exposes
 
 ```javascript
 // index.js
+import HomeService from './Home.service';
 
 // DO
 export const myModule = {
