@@ -4,7 +4,7 @@ This addon simplifies the entities management.
 * manage fetch status and errors
 * store entities in redux store
 
-Entities can have any type: Object, Array, ...
+Entities can have any data type: Object, Array, ...
 
 ## Installation
 

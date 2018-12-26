@@ -1,8 +1,9 @@
 # @talend/app-saga
 
-This addon
-* adds redux-saga middleware
-* exposes a HOC that start/stop a saga based on the component mount/unmout
+This addon enables redux-saga.
+It replaces redux-saga management with sagaRouter and avoids route configuration duplication.
+* add redux-saga middleware
+* expose a HOC that start/stop a saga based on the component mount/unmout
 
 ## Installation
 

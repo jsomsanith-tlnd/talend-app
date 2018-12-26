@@ -6,6 +6,8 @@
 * additional modules management
 
 
+## Table of content
+
 1. [Installation](#installation): how to get the library.
 2. [Bootstrap](#bootstrap): how to bootstrap your app.
 3. [Modules](#modules): modules are the center of @talend/app. Learn how to create your own modules to compose your apps.
@@ -69,6 +71,9 @@ const myAddonModule = {
 
 
 // the main app
+import { myMiddleware, appReducer } from './app/config';
+import App from './app/App';
+
 bootstrap({
     appId: 'app',
     store: {
@@ -87,7 +92,7 @@ In this example, myAddonModule is merged with the configuration passed to `boots
 * reducer will contains `app` and `my-addon` reducer keys
 * storeCallback will trigger only myAddonModule storeCallback as it's the only one.
 
-Modules can be internal modules that are parts of your applications (see next Architecture section), or external modules.
+Modules can be internal modules that are parts of your applications (see next section about custom modules), or external modules.
 You can find some interesting external modules :
 * [Entities](../talend-app-entities/README.md) : helps to manage entities with the fetch status and errors.
 * [Saga](../talend-app-saga/README.md) : add redux-saga with a HOC to start/stop the saga depending on components mount/unmount.
@@ -166,7 +171,7 @@ Redux modules would export
 * a module configuration, containing reducers for example
 * a service that contains `selectors` and `action creators`
 
-The shape of the service should have a clear separation between the 2 type of entities
+The shape of the service should have a clear separation between the 2 types of entities
 ```javascript
 // DO
 const MyNonReduxService = {

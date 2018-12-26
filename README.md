@@ -17,34 +17,34 @@
 
 |CMF feature|Proposition|
 |---|---|
-| <span style="color: orange">Collections</span> | Service to set/get entities from id. Store it with a reducer in store.collections. <br/>Need api to simply modify element in collection.<br/>Need to store status. |
-| <span style="color: red">Saga</span> | Additional module. Exposes a withSaga HOC that will start/stop saga on mount/unmount. <br/>So every app can do whatever they want with saga, and we can attach sagas to main components in common modules. |
-| <span style="color: orange">Http</span> | Keep the http but not in middleware --> http Service, that will be configurable, resolve token, etc. EntityService will use it to fetch. |
+| <span style="color: orange">Collections</span> | Service to set/get entities from id. Store it with a reducer in store dedicated part. <br/>Need api to simply modify element in collection.<br/>Need to store status and errors. |
+| <span style="color: orange">Saga</span> | Additional module. Exposes a withSaga HOC that will start/stop saga on mount/unmount. <br/>So every app can do whatever they want with saga, and we can attach sagas to main components in common modules. |
+| <span style="color: orange">Http</span> | Keep the http but not in middleware: HTTPService, that will be configurable, resolve token, etc. EntityService will use it to fetch. |
 
 ## Drop
 
 |CMF feature|Proposition|
 |---|---|
 | <span style="color: red">Action api</span> | Drop.<br/>Write js. |
-| <span style="color: red">Expressions</span> | Drop.<br/>Write it in js in mapStateToProps or in render |
-| <span style="color: red">Component state</span> | Drop.<br/>If need to share/control from outside --> Service |
-| <span style="color: red">CmfConnect</span> | Drop.<br/>Use connect(), Services selectors in mapStateToProps, Services setters in mapDispatchToProps. |
+| <span style="color: red">Expressions</span> | Drop.<br/>Write it in js in mapStateToProps, render, or service |
+| <span style="color: red">Component state</span> | Drop.<br/>If need to share/control from outside: Service |
+| <span style="color: red">CmfConnect</span> | Drop.<br/>Use connect(), Services selectors in mapStateToProps, Services actions in mapDispatchToProps. |
 | <span style="color: red">Router</span> | Drop.<br/>Apps write their routes in JS using react-router directly. App can then use React.lazy for code splitting per route. |
 
 ## Drop until we have the need
 
 |CMF feature|Proposition|
 |---|---|
-| <span style="color: orange">Settings</span> | Simplifie with limited settings + context. |
+| <span style="color: red">Settings</span> | Simplify with limited settings, using context. |
 | <span style="color: red">Registries/Inject</span> | Component registries (EE) with inject feature via context. |
 
 # Packages
 
 ## @talend/app
 
-This replace the heavy react-cmf module by the minimum bootstrap code.
+This replaces the heavy react-cmf module by the minimum bootstrap code.
 
-`@talend/app` is a lightweight module that manage 2 things
+`@talend/app` is a lightweight module that manages 2 things
 * the bootstrap of the app with state management using redux
 * modules (external addons, or internal business modules)
 
@@ -52,12 +52,10 @@ This replace the heavy react-cmf module by the minimum bootstrap code.
 
 ## @talend/app-saga
 
-This replaces redux-saga management with sagaRouter.
-It avoids route configuration duplication.
-
-This addon
-* adds redux-saga middleware
-* exposes a HOC that start/stop a saga based on the component mount/unmout
+This addon enables redux-saga.
+It replaces redux-saga management with sagaRouter and avoids route configuration duplication.
+* add redux-saga middleware
+* expose a HOC that start/stop a saga based on the component mount/unmout
 
 [Go to documentation](./src/talend-app-saga/README.md)
 
@@ -71,7 +69,7 @@ This addon simplifies the management of entities.
 
 ## @talend/app-http
 
-This module helps the http configuration
+This module helps with the http configuration
 * global configuration
 * specific configuration per request
 

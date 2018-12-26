@@ -1,6 +1,6 @@
 # @talend/app-http
 
-This module helps the http configuration
+This module helps with the http configuration
 * global configuration
 * specific configuration per request
 
