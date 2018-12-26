@@ -112,12 +112,14 @@ This can be then part of a service (ex: HomeService that manage all common home 
 
 1. Get out of settings hell
 2. Use a real router instead of route settings
+3. Replace HTTP and collections middleware
+4. Replace bootstrap()
 
 ## Get out of settings hell
 TODO
 * views --> create component
 * actions --> add action in service
-* sagas --> withSaga HOC (need to register the stop/start saga)
+* sagas --> withSaga HOC
 
 At the end, we only have route settings and components for each route in registry.
 
@@ -132,3 +134,8 @@ At the end, no settings anymore
 ## HTTP and collections middlewares
 TODO
 * Switch to HTTPService and EntityService
+* Move http bootstrap configuration to HTTPService configuration
+
+## bootstrap
+* use `@talend/app` bootstrap
+* remaining sagas should be attached to root component via `WithSaga()`
