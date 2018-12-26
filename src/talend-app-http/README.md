@@ -60,7 +60,7 @@ All requests accept a specific specific configuration, that will be merged with 
 import HttpService from '@talend/app-http';
 
 HttpService.setConfiguration({
-    headers: { 'content-type': 'application/json },
+    headers: { 'content-type': 'application/json' },
 });
 HttpService.get(url, {
     headers: { customKey: 'A3424B9FD8' }
@@ -82,7 +82,7 @@ To avoid global configuration, just pass `extends: false` in the custom configur
 import HttpService from '@talend/app-http';
 
 HttpService.setConfiguration({
-    headers: { 'content-type': 'application/json },
+    headers: { 'content-type': 'application/json' },
 });
 HttpService.get(url, {
     headers: { extends: false, customKey: 'A3424B9FD8' }
