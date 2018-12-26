@@ -19,7 +19,7 @@
 |---|---|
 | <span style="color: orange">Collections</span> | Service to set/get entities from id. Store it with a reducer in store.collections. <br/>Need api to simply modify element in collection.<br/>Need to store status. |
 | <span style="color: red">Saga</span> | Additional module. Exposes a withSaga HOC that will start/stop saga on mount/unmount. <br/>So every app can do whatever they want with saga, and we can attach sagas to main components in common modules. |
-| <span style="color: orange">Http</span> | Keep the http but not in middleware --> http Service, that will be configurable, resolve token, etc. It can use EntityService to store collection. |
+| <span style="color: orange">Http</span> | Keep the http but not in middleware --> http Service, that will be configurable, resolve token, etc. EntityService will use it to fetch. |
 
 ## Drop
 
