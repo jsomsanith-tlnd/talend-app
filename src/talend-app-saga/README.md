@@ -1,8 +1,8 @@
 # @talend/app-saga
 
-`@talend/app-saga` is a `@talend/app` addon that
-* add redux-saga middleware
-* expose a HOC that start/stop a saga based on the component mount/unmout
+This addon
+* adds redux-saga middleware
+* exposes a HOC that start/stop a saga based on the component mount/unmout
 
 ## Installation
 

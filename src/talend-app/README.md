@@ -5,6 +5,15 @@
 * state management using redux
 * additional modules management
 
+
+1. [Installation](#installation): how to get the library.
+2. [Bootstrap](#bootstrap): how to bootstrap your app.
+3. [Modules](#modules): modules are the center of @talend/app. Learn how to create your own modules to compose your apps.
+4. [Architecture](#architecture): learn how to write your services, composed with your custom modules, this represents a business part of your app.
+5. [Conventions](#conventions): some code conventions.
+6. [Recommanded optional libs](#recommanded-optional-libs): use those libs to manage router, immutability, ...
+
+
 ## Installation
 
 ```
@@ -84,7 +93,6 @@ You can find some interesting external modules :
 * [Saga](../talend-app-saga/README.md) : add redux-saga with a HOC to start/stop the saga depending on components mount/unmount.
 * [Http](../talend-app-http/README.md) : helps to manage http request, with the possibility to configure 1 global configuration, or 1 configuration per request.
 * [Store utils](../talend-app-store-utils/README.md) : a way to avoid writing reducers for very simple cases.
-* Injection : a way to inject props and components dynamically.
 
 ## Architecture
 
@@ -186,3 +194,11 @@ const MyReduxService = {
 }
 
 ```
+
+## Recommanded optional libs
+
+| Lib | Description |
+|---|---|
+| [react-router](https://github.com/ReactTraining/react-router) + [connected-react-router](https://github.com/supasate/connected-react-router) | Router lib |
+| [redux-data-structures](https://redux-data-structures.js.org/) | Reducer generator that avoids lots of boilerplate |
+| [immer](https://github.com/mweststrate/immer) | Immutability in reducers |

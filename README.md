@@ -10,30 +10,37 @@
 
 |CMF feature|Proposition|
 |---|---|
-| <span style="color: green">Modules</span> | Keep, to configure store, http specific things, add settings from url |
-| <span style="color: orange">Router</span> | Keep, need abstraction to be able to upgrade versions or switch library without pain. But app write their routes in JS using tApp abstraction. App can then use React.lazy for code splitting per route. |
+| <span style="color: green">Bootstrap</span> | Keep, but lighten.<br/>Additional modules to configure additional features. |
+| <span style="color: green">Modules</span> | Keep. |
 
 ## Transform
 
 |CMF feature|Proposition|
 |---|---|
-| <span style="color: orange">Settings</span> | Simplifie with limited settings if need to override + context. But if no override, no settings. |
-| <span style="color: orange">Collections</span> | Service to set/get collection from id. Store it with a reducer in store.collections. <br/>Need api to simply modify element in collection. |
-| <span style="color: orange">Http</span> | Keep the http but not in middleware --> http Service, that will be configurable, resolve token, etc. It can use Collection service to store collection. |
+| <span style="color: orange">Collections</span> | Service to set/get entities from id. Store it with a reducer in store.collections. <br/>Need api to simply modify element in collection.<br/>Need to store status. |
+| <span style="color: red">Saga</span> | Additional module. Exposes a withSaga HOC that will start/stop saga on mount/unmount. <br/>So every app can do whatever they want with saga, and we can attach sagas to main components in common modules. |
+| <span style="color: orange">Http</span> | Keep the http but not in middleware --> http Service, that will be configurable, resolve token, etc. It can use EntityService to store collection. |
 
 ## Drop
 
 |CMF feature|Proposition|
 |---|---|
+| <span style="color: red">Action api</span> | Drop.<br/>Write js. |
+| <span style="color: red">Expressions</span> | Drop.<br/>Write it in js in mapStateToProps or in render |
 | <span style="color: red">Component state</span> | Drop.<br/>If need to share/control from outside --> Service |
 | <span style="color: red">CmfConnect</span> | Drop.<br/>Use connect(), Services selectors in mapStateToProps, Services setters in mapDispatchToProps. |
-| <span style="color: red">Saga</span> | Drop everything, and expose a withSaga HOC that will start/stop saga on mount/unmount. <br/>So every app can do whatever they want with saga, and we can attach sagas to main components in common modules. |
-| <span style="color: red">Selectors</span> | Drop, they will be in services. There will be some Services from tApp (collections), and some you write in own services. |
-| <span style="color: red">Expressions</span> | Drop.<br/>Write it in js in mapStateToProps or in render |
-| <span style="color: red">Registries/Inject</span> | Drop.<br/>Until we have the need to override a component, we don't implement registries. If we need, component registries (EE) with inject feature via context. |
-| <span style="color: red">Action api</span> | Drop.<br/>Write js. |
+| <span style="color: red">Router</span> | Drop.<br/>Apps write their routes in JS using react-router directly. App can then use React.lazy for code splitting per route. |
 
-# @talend/app
+## Drop until we have the need
+
+|CMF feature|Proposition|
+|---|---|
+| <span style="color: orange">Settings</span> | Simplifie with limited settings + context. |
+| <span style="color: red">Registries/Inject</span> | Component registries (EE) with inject feature via context. |
+
+# Packages
+
+## @talend/app
 
 This replace the heavy react-cmf module by the minimum bootstrap code.
 
@@ -43,18 +50,18 @@ This replace the heavy react-cmf module by the minimum bootstrap code.
 
 [Go to documentation](./src/talend-app/README.md)
 
-# @talend/app-saga
+## @talend/app-saga
 
 This replaces redux-saga management with sagaRouter.
 It avoids route configuration duplication.
 
-`@talend/app-saga` is a `@talend/app` addon that
-* add redux-saga middleware
-* expose a HOC that start/stop a saga based on the component mount/unmout
+This addon
+* adds redux-saga middleware
+* exposes a HOC that start/stop a saga based on the component mount/unmout
 
 [Go to documentation](./src/talend-app-saga/README.md)
 
-# @talend/app-entities
+## @talend/app-entities
 
 This addon simplifies the management of entities.
 * manage fetch status and errors
@@ -62,7 +69,7 @@ This addon simplifies the management of entities.
 
 [Go to documentation](./src/talend-app-entities/README.md)
 
-# @talend/app-http
+## @talend/app-http
 
 This module helps the http configuration
 * global configuration
@@ -70,117 +77,25 @@ This module helps the http configuration
 
 [Go to documentation](./src/talend-app-http/README.md)
 
-# @talend/app-store-utils
+## @talend/app-store-utils
 
-# @talend/app-inject
+**Warning**
+Do we keep that or do we favor redux-data-structures ?
 
-# @talend/app-router
-Do we keep that ?
+This module offers you a place in redux store to get/set values
 
+[Go to documentation](./src/talend-app-store-utils/README.md)
 
+# Next steps
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# Settings
-
-Drop actions, routes, views parts.
+## @talend/app-inject
 
 The idea from a crazy guy : https://codesandbox.io/s/j73z71p9n9
 
-# Services
+## @talend/app-flags
 
-## Simplify redux module
-
-A first attempt to simplify redux api has been done in @talend/app-store-utils but it was abandoned because the code is not explicit enough.
-No need to develop something else, if the devs want to use some helpers, a lot of them exist, like https://github.com/adrienjt/redux-data-structures.
-
-# Built-in services
-
-# Router
-
-## Warning
-
-Still need to think about this one.
-The first idea was to have
-* an abstraction on top on react-router.
-* a service on top on connected-react-router
-
-But we may not need that.
-
-# Router component
-
-```javascript
-import '@talend/bootstrap-theme/src/theme/theme.scss';
-import React, { Suspense } from 'react';
-import ProptTypes from 'prop-types';
-import { Router, Route } from '@talend/app/route';
-import Loader from '@talend/components/lib/Loader';
-
-import { LazyDataset } from '@talend/dataset'; // exposes a lazy component
-import Home from './Home'; // Layout + header + side panel
-
-const LazyPreparations = React.lazy(() => import('./Preparations'));
-
-function App() {
-    return (
-        <Router>
-            <Home>
-                <Suspense fallback={Loader}>
-                    <Route path="/datasets" component={LazyDataset}>
-                    <Route path="/preparations" component={LazyPreparations}>
-                </Suspense>
-            </Home>
-        </Router>
-    );
-}
-
-```
-
-Or if the external module defines a common path mapping
-
-```javascript
-import '@talend/bootstrap-theme/src/theme/theme.scss';
-import React, { Suspense } from 'react';
-import ProptTypes from 'prop-types';
-import { Router, Route } from '@talend/app/route';
-import Loader from '@talend/components/lib/Loader';
-
-import { DatasetRoutes } from '@talend/dataset'; // exposes route components with lazy component
-import Home from './Home'; // Layout + header + side panel
-
-const LazyPreparations = React.lazy(() => import('./Preparations'));
-
-function App() {
-    return (
-        <Router>
-            <Home>
-                <Suspense fallback={Loader}>
-                    <DatasetRoutes />
-                    <Route path="/preparations" component={LazyPreparations}>
-                </Suspense>
-            </Home>
-        </Router>
-    );
-}
-
-```
-
-## Router service
-
-Service that dispatch the actions for connected-react-router.
-Like the router, the implem can be changed easily, without changing the api.
+Feature flipping / user rights HOC.
+Based on the same idea as `@talend/app-inject` (context + HOC)
 
 # Drawbacks
 
@@ -192,18 +107,6 @@ Those have to be connected in each project (if needed).
 Let's take an example : the side panel. It will be only a component, with uncontrolled behavior by default, and controlled if it has props.onToggle and props.isExpanded.
 If a project need to control it to open it from the outside, they have to connect it themself, and manage its place in the project store.
 This can be then part of a service (ex: HomeService that manage all common home pages state (panel, header, etc).
-
-# Feedbacks to explore
-
-* router
-Router abstraction can remove some features. Perhaps no abstraction, choose 1 lib, 1 version and keep it.
-Router should not be mandatory
-
-* store
-Look at immer for immutability
-
-* http
-Improve README to describe more the features it contains around http calls
 
 # Migration path from CMF
 
@@ -221,4 +124,11 @@ At the end, we only have route settings and components for each route in registr
 ## Remove route settings
 TODO
 * PR to extract router in progress
-*
+* Convert router settings to react-router use
+* Convert router middleware use to connected-react-router use
+
+At the end, no settings anymore
+
+## HTTP and collections middlewares
+TODO
+* Switch to HTTPService and EntityService
