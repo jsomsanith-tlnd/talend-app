@@ -109,9 +109,10 @@ This can be then part of a service (ex: HomeService that manage all common home 
 # Migration path from CMF
 
 1. Get out of settings hell
-2. Use a real router instead of route settings
-3. Replace HTTP and collections middleware
-4. Replace bootstrap()
+2. Get out of settings hell
+3. Use a real router instead of route settings
+4. Replace HTTP and collections middleware
+5. Replace bootstrap()
 
 ## Get out of settings hell
 TODO
@@ -120,6 +121,10 @@ TODO
 * sagas --> withSaga HOC
 
 At the end, we only have route settings and components for each route in registry.
+
+## Remove Injection
+TODO
+* use render props
 
 ## Remove route settings
 TODO
