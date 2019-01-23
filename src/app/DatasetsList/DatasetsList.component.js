@@ -6,12 +6,30 @@ import EntitiesService from '../../talend-app-entities';
 class DatasetsList extends React.Component {
 	componentDidMount() {
 		this.props.fetchDataset('datasets', '/datasets.json');
+		window.Intercom('boot', {
+			app_id: 'vifzs2m2',
+			widget: {
+				activator: '#IntercomDefaultWidget',
+			},
+		});
 	}
-
+	logIntercom(event) {
+		window.Intercom('update', {
+			app_id: 'vifzs2m2',
+			email: 'jsomsanith@talend.com',
+			widget: {
+				activator: '#IntercomDefaultWidget',
+			},
+			custom_metadata: 'lol',
+		});
+	}
 	render() {
 		const { isFetching, data, error } = this.props.datasets;
 		return (
 			<div>
+				<button className="btn btn-primary" onClick={this.logIntercom.bind(this)}>
+					Log in
+				</button>
 				<h1 key="heading" className="sr-only">
 					Datasets list
 				</h1>
